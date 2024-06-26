@@ -3,14 +3,14 @@
   "name": "cinephoria-backend",
   "builds": [
     {
-      "src": "backend/server.js",
+      "src": "*.js",
       "use": "@vercel/node"
     }
   ],
   "routes": [
     {
-      "src": "/api/(.*)",
-      "dest": "/backend/server.js"
+      "src": "/(.*)",
+      "dest": "/"
     }
   ]
 }
