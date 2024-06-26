@@ -3,25 +3,25 @@
   "name": "cinephoria-app",
   "builds": [
     {
-      "src": "web-app/backend/server.js",
+      "src": "backend/server.js",
       "use": "@vercel/node"
     },
     {
-      "src": "web-app/frontend/package.json",
+      "src": "frontend/package.json",
       "use": "@vercel/static-build",
       "config": {
-        "distDir": "web-app/frontend/dist"
+        "distDir": "frontend/dist"
       }
     }
   ],
   "routes": [
     {
       "src": "/api/(.*)",
-      "dest": "/web-app/backend/server.js"
+      "dest": "/backend/server.js"
     },
     {
       "src": "/(.*)",
-      "dest": "/web-app/frontend/dist/$1"
+      "dest": "/frontend/dist/$1"
     }
   ]
 }
