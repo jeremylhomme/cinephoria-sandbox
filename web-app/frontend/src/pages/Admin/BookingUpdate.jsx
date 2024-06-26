@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { NavLink, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
-import { PhotoIcon } from "@heroicons/react/24/outline";
 import LoaderFull from "../../components/LoaderFull";
 
 import BookingSeatsMap from "../../components/BookingSeatsMap";

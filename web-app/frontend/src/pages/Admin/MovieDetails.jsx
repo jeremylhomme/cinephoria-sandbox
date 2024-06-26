@@ -1,6 +1,6 @@
 import React from "react";
 import { Link, useParams } from "react-router-dom";
-import { PhotoIcon } from "@heroicons/react/24/outline";
+import {} from "@heroicons/react/24/outline";
 import LoaderFull from "../../components/LoaderFull";
 import { useGetMovieDetailsQuery } from "../../redux/api/movieApiSlice";
 import { BASE_URL } from "../../redux/constants";

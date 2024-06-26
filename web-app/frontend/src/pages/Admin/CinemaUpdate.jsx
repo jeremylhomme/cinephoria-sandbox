@@ -1,13 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { NavLink, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
-import { PhotoIcon } from "@heroicons/react/24/outline";
 import LoaderFull from "../../components/LoaderFull";
 
-import {
-  useGetCinemaDetailsQuery,
-  useUpdateCinemaMutation,
-} from "../../redux/api/cinemaApiSlice";
+import {} from "../../redux/api/cinemaApiSlice";
 
 import PhoneInput from "react-phone-number-input";
 

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import LoaderFull from "../../components/LoaderFull";
-import { PencilSquareIcon, TrashIcon } from "@heroicons/react/24/outline";
+import {} from "@heroicons/react/24/outline";
 
 import {
   useGetCategoriesQuery,
