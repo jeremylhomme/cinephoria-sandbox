@@ -1,0 +1,80 @@
+version: "3.8"
+
+services:
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    image: app-frontend
+    command: npm start
+    volumes:
+      - ./frontend:/usr/src/app
+      - /usr/src/app/node_modules
+    ports:
+      - "5174:5173" # Docker container port : Host machine port
+    depends_on:
+      - backend
+    networks:
+      - cinephoria-network
+
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: app-backend
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/node_modules
+    ports:
+      - "5001:5000" # Docker container port : Host machine port
+    depends_on:
+      - mysql-db
+      - mongodb-db
+    environment:
+      - MONGODB_HOST=mongodb-db
+      - MONGODB_USERNAME=${MONGODB_USERNAME}
+      - MONGODB_PASSWORD=${MONGODB_PASSWORD}
+      - MONGODB_NAME=${MONGODB_NAME}
+      - MYSQL_USER=${MYSQL_USER}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+      - MYSQL_HOST=mysql-db
+      - MYSQL_DB_NAME=${MYSQL_DB_NAME}
+      - MONGODB_PORT=${MONGODB_PORT}
+      - MYSQL_PORT=3306
+      - JWT_SECRET=${JWT_SECRET}
+    networks:
+      - cinephoria-network
+
+  mysql-db:
+    image: mysql:5.7
+    restart: always
+    environment:
+      - MYSQL_ROOT_PASSWORD=${MYSQL_PASSWORD}
+    ports:
+      - "3307:3306"
+    volumes:
+      - mysql-data:/var/lib/mysql
+    networks:
+      - cinephoria-network
+
+  mongodb-db:
+    image: mongo:latest
+    restart: always
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=${MONGO_INITDB_ROOT_USERNAME}
+      - MONGO_INITDB_ROOT_PASSWORD=${MONGO_INITDB_ROOT_PASSWORD}
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+      - ./mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
+    networks:
+      - cinephoria-network
+
+networks:
+  cinephoria-network:
+    driver: bridge
+
+volumes:
+  mysql-data:
+  mongo-data:

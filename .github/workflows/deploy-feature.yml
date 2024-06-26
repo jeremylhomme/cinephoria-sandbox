@@ -1,0 +1,124 @@
+name: Feature Branch CI
+
+on:
+  push:
+    branches:
+      - "feature/*"
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    services:
+      mysql-db:
+        image: mysql:5.7
+        ports:
+          - 3307:3306
+        env:
+          MYSQL_ROOT_PASSWORD: ${{ secrets.MYSQL_PASSWORD }}
+        options: >-
+          --health-cmd="mysqladmin ping -h localhost --password=$$MYSQL_ROOT_PASSWORD" 
+          --health-interval=10s 
+          --health-timeout=5s 
+          --health-retries=5
+
+      mongodb-db:
+        image: mongo:latest
+        ports:
+          - 27017:27017
+        env:
+          MONGO_INITDB_ROOT_USERNAME: root
+          MONGO_INITDB_ROOT_PASSWORD: ${{ secrets.MONGO_INITDB_ROOT_PASSWORD }}
+        options: >-
+          --health-cmd="mongo --eval 'db.adminCommand('ping')'" 
+          --health-interval=10s 
+          --health-timeout=5s 
+          --health-retries=5
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Use Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: "20.x"
+
+      - name: Install dependencies
+        run: npm ci
+        working-directory: ./web-app
+
+      - name: Start Docker Compose
+        run: docker-compose up -d
+        working-directory: ./web-app
+        env:
+          DATABASE_URL: mysql://root:${{ secrets.MYSQL_PASSWORD }}@mysql-db:3306/sql_cinephoria_test
+          MONGODB_NAME: mongo_cinephoria_test
+          MONGODB_HOST: mongodb-db
+          MONGODB_PASSWORD: ${{ secrets.MONGODB_PASSWORD }}
+          MONGODB_USERNAME: root
+          MONGODB_PORT: 27017
+          MYSQL_DB_NAME: sql_cinephoria_test
+          MYSQL_HOST: mysql-db
+          MYSQL_PASSWORD: ${{ secrets.MYSQL_PASSWORD }}
+          MYSQL_USER: root
+          MYSQL_PORT: 3306
+          MYSQL_ROOT_PASSWORD: ${{ secrets.MYSQL_PASSWORD }}
+          MONGO_INITDB_ROOT_USERNAME: root
+          MONGO_INITDB_ROOT_PASSWORD: ${{ secrets.MONGO_INITDB_ROOT_PASSWORD }}
+
+      - name: Wait for MySQL to be ready
+        run: |
+          until docker-compose exec mysql-db mysqladmin ping -h localhost --password=${{ secrets.MYSQL_PASSWORD }} --silent; do
+            echo "Waiting for MySQL to be ready..."
+            sleep 5
+          done
+        working-directory: ./web-app
+
+      - name: Wait for MongoDB to be ready
+        run: |
+          until docker-compose exec mongodb-db mongo --eval "db.adminCommand('ping')"; do
+            echo "Waiting for MongoDB to be ready..."
+            sleep 5
+          done
+        working-directory: ./web-app
+
+      - name: Run Prisma migrations
+        run: npx prisma migrate dev --name init
+        working-directory: ./web-app
+
+      - name: Generate Prisma client
+        run: npx prisma generate
+        working-directory: ./web-app
+
+      - name: Run backend unit tests
+        run: npm run test:backend:unit
+        working-directory: ./web-app
+        env:
+          DATABASE_URL: mysql://root:${{ secrets.MYSQL_PASSWORD }}@mysql-db:3306/sql_cinephoria_test
+          JWT_SECRET: ${{ secrets.JWT_SECRET }}
+
+      - name: Run backend functional tests
+        run: npm run test:backend:functional
+        working-directory: ./web-app
+        env:
+          JWT_SECRET: ${{ secrets.JWT_SECRET }}
+
+      - name: Run backend integration tests
+        run: npm run test:backend:integration
+        working-directory: ./web-app
+        env:
+          DATABASE_URL: mysql://root:${{ secrets.MYSQL_PASSWORD }}@mysql-db:3306/sql_cinephoria_test
+          MONGODB_NAME: mongo_cinephoria_test
+          MONGODB_HOST: mongodb-db
+          MONGODB_PASSWORD: ${{ secrets.MONGODB_PASSWORD }}
+          MONGODB_USERNAME: root
+          MONGODB_PORT: 27017
+          MYSQL_DB_NAME: sql_cinephoria_test
+          MYSQL_HOST: mysql-db
+          MYSQL_PASSWORD: ${{ secrets.MYSQL_PASSWORD }}
+          MYSQL_USER: root
+          MYSQL_PORT: 3306
+          MYSQL_ROOT_PASSWORD: ${{ secrets.MYSQL_PASSWORD }}
+          MONGO_INITDB_ROOT_USERNAME: root
+          MONGO_INITDB_ROOT_PASSWORD: ${{ secrets.MONGO_INITDB_ROOT_PASSWORD }}
