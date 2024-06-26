@@ -3,7 +3,7 @@ import react from "@vitejs/plugin-react";
 import dotenv from "dotenv";
 import path from "path";
 
-dotenv.config({ path: path.resolve(__dirname, "../.env") });
+dotenv.config({ path: path.resolve(__dirname, ".env") });
 
 export default defineConfig({
   plugins: [react()],
@@ -11,11 +11,11 @@ export default defineConfig({
     "process.env": process.env,
   },
   build: {
-    outDir: path.resolve(__dirname, "dist"),
+    outDir: "dist",
   },
   resolve: {
     alias: {
-      "@": path.resolve(__dirname, "./src"),
+      "@": path.resolve(__dirname, "src"),
     },
   },
 });
