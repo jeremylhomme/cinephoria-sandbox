@@ -14,6 +14,7 @@
       "use": "@vercel/static-build"
     }
   ],
+  "rewrites": [{ "source": "/(.*)", "destination": "/" }],
   "routes": [
     {
       "src": "/api/(.*)",
