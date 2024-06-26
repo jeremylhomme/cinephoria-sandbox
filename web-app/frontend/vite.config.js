@@ -11,7 +11,7 @@ export default defineConfig({
     "process.env": process.env,
   },
   build: {
-    outDir: path.resolve(__dirname, "dist"),
+    outDir: "dist",
   },
   resolve: {
     alias: {
