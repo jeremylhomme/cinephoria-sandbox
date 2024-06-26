@@ -1,4 +1,8 @@
-export const BASE_URL = "http://localhost:5000";
+import dotenv from "dotenv";
+
+dotenv.config();
+
+export const BASE_URL = process.env.VITE_BASE_URL;
 export const USER_URL = `${BASE_URL}/api/users`;
 export const BOOKING_URL = `${BASE_URL}/api/bookings`;
 export const CATEGORY_URL = `${BASE_URL}/api/categories`;
