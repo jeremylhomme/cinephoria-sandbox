@@ -7,6 +7,10 @@ import mysql from "mysql2/promise";
 import mongoose from "mongoose";
 import http from "http";
 import Stripe from "stripe";
+import dotenv from "dotenv";
+
+// Load environment variables from .env file
+dotenv.config();
 
 import bookingRoutes from "./routes/bookingRoutes.js";
 import categoryRoutes from "./routes/categoryRoutes.js";
@@ -50,11 +54,11 @@ const connectMySQL = async () => {
 // Function to connect to MongoDB using Mongoose
 const connectMongoDB = async () => {
   try {
-    const uri = `mongodb://${process.env.MONGODB_USERNAME}:${process.env.MONGODB_PASSWORD}@${process.env.MONGODB_HOST}:${process.env.MONGODB_PORT}/${process.env.MONGODB_NAME}?authSource=admin&authMechanism=SCRAM-SHA-256`;
+    const uri = process.env.MONGODB_URI;
     await mongoose.connect(uri, {
       serverSelectionTimeoutMS: 30000,
     });
-    console.log(`MongoDB Connected: ${process.env.MONGODB_HOST} ✅`);
+    console.log(`MongoDB Connected ✅`);
   } catch (error) {
     console.error(`Error from MongoDB: ${error.message}`);
     console.error(`Stack Trace: ${error.stack}`);
