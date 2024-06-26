@@ -3,7 +3,7 @@
   "projects": [
     {
       "name": "cinephoria-frontend",
-      "path": "frontend",
+      "root": "./frontend",
       "builds": [
         {
           "src": "package.json",
@@ -22,7 +22,7 @@
     },
     {
       "name": "cinephoria-backend",
-      "path": "backend",
+      "root": "./backend",
       "builds": [
         {
           "src": "server.js",
@@ -32,7 +32,7 @@
       "routes": [
         {
           "src": "/api/(.*)",
-          "dest": "/backend/server.js"
+          "dest": "/server.js"
         }
       ]
     }
