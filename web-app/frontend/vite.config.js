@@ -11,7 +11,7 @@ export default defineConfig({
     "process.env": process.env,
   },
   build: {
-    outDir: "dist", // Ensure this is set correctly
+    outDir: "dist",
   },
   server: {
     proxy: {
