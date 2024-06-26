@@ -3,17 +3,15 @@ import react from "@vitejs/plugin-react";
 import dotenv from "dotenv";
 import path from "path";
 
-dotenv.config({ path: path.resolve(__dirname, ".env") });
+dotenv.config({ path: path.resolve(__dirname, "../.env") });
 
 export default defineConfig({
   plugins: [react()],
   define: {
-    "process.env": JSON.stringify(process.env),
+    "process.env": process.env,
   },
   build: {
-    rollupOptions: {
-      external: ["@heroicons/react"],
-    },
+    outDir: "dist",
   },
   server: {
     proxy: {
@@ -26,6 +24,11 @@ export default defineConfig({
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/uploads/, ""),
       },
+    },
+  },
+  resolve: {
+    alias: {
+      "@": path.resolve(__dirname, "./src"),
     },
   },
 });
