@@ -35,7 +35,7 @@ let mysqlPool;
 // Function to connect to MySQL
 const connectMySQL = async () => {
   try {
-    const uri = `mysql://${process.env.MYSQL_USER}:${process.env.MYSQL_PASSWORD}@${process.env.MYSQL_HOST}:${process.env.MYSQL_PORT}/${process.env.MYSQL_DB_NAME}`;
+    const uri = process.env.DATABASE_URL;
     mysqlPool = mysql.createPool(uri);
     mysqlConnection = await mysqlPool.getConnection();
     console.log(`MySQL Connected: ${process.env.MYSQL_HOST} ✅`);
