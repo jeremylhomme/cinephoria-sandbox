@@ -28,7 +28,8 @@
     "preview": "vite preview",
     "add-admin": "node env_scripts/runAddAdmin.js",
     "seed": "node prisma/seed.js",
-    "reset-db": "npx prisma migrate reset --force && npm run seed"
+    "reset-db": "npx prisma migrate reset --force && npm run seed",
+    "start": "node backend/server.js"
   },
   "keywords": [],
   "author": "Jeremy Lhomme",
