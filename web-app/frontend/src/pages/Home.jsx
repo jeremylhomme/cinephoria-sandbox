@@ -4,7 +4,7 @@ import {
   DisclosureButton,
   DisclosurePanel,
 } from "@headlessui/react";
-import {} from "@heroicons/react/24/outline";
+import { MinusIcon, PlusIcon } from "@heroicons/react/24/outline";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import backgroundVideo from "../assets/videos/background-video.mp4";
 import { useGetMoviesQuery } from "../redux/api/movieApiSlice";

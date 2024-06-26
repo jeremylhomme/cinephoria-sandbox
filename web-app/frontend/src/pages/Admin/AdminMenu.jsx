@@ -2,7 +2,19 @@ import React from "react";
 import { Fragment, useState, useEffect } from "react";
 import { Dialog, Transition, Menu } from "@headlessui/react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import {} from "@heroicons/react/24/outline";
+import {
+  Bars3Icon,
+  HomeIcon,
+  UsersIcon,
+  XMarkIcon,
+  TagIcon,
+  FilmIcon,
+  TicketIcon,
+  PlayCircleIcon,
+  ChevronDownIcon,
+  VideoCameraIcon,
+  ExclamationTriangleIcon,
+} from "@heroicons/react/24/outline";
 
 import { toast } from "react-toastify";
 import { useSelector, useDispatch } from "react-redux";

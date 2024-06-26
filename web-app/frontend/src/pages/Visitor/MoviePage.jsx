@@ -8,7 +8,7 @@ import { useGetSessionDetailsQuery } from "../../redux/api/sessionApiSlice";
 import { useCreateOrUpdateBookingMutation } from "../../redux/api/bookingApiSlice";
 import { skipToken } from "@reduxjs/toolkit/query/react";
 import { MdWheelchairPickup } from "react-icons/md";
-import {} from "@heroicons/react/24/outline";
+import { PlayIcon } from "@heroicons/react/24/outline";
 import Modal from "react-modal";
 
 Modal.setAppElement("#root");

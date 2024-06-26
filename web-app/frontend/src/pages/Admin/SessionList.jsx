@@ -2,7 +2,11 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import LoaderFull from "../../components/LoaderFull";
-import {} from "@heroicons/react/24/outline";
+import {
+  PencilSquareIcon,
+  TrashIcon,
+  EyeIcon,
+} from "@heroicons/react/24/outline";
 import {
   useGetSessionsQuery,
   useDeleteSessionMutation,
