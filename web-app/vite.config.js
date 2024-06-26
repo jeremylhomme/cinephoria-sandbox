@@ -8,7 +8,12 @@ dotenv.config({ path: path.resolve(__dirname, ".env") });
 export default defineConfig({
   plugins: [react()],
   define: {
-    "process.env": process.env,
+    "process.env": JSON.stringify(process.env),
+  },
+  build: {
+    rollupOptions: {
+      external: ["@heroicons/react"],
+    },
   },
   server: {
     proxy: {
