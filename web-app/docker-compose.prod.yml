@@ -34,7 +34,7 @@ services:
       - .env.docker.prod
     networks:
       - cinephoria-network
-    command: sh -c "until nc -z mysql-db 3306; do echo 'Waiting for MySQL...'; sleep 1; done; echo 'MySQL is up - running Prisma migrate and generate'; npx prisma migrate deploy; npx prisma generate; npm run backend:docker:prod"
+    command: sh -c "until nc -z mysql-db 3306; do echo 'Waiting for MySQL...'; sleep 1; done; echo 'MySQL is up - running Prisma migrate and generate'; npx prisma migrate deploy; npx prisma generate; npm run docker:prod"
 
   mysql-db:
     image: mysql:5.7
