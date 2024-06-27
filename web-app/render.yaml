@@ -1,5 +1,14 @@
 services:
   - type: web
+    name: cinephoria-frontend
+    env: node
+    plan: free
+    buildCommand: cd frontend && npm install && npm run build
+    startCommand: cd frontend && npm start
+    envVars:
+      - key: VITE_BASE_URL
+
+  - type: web
     name: cinephoria-backend
     env: node
     plan: free
