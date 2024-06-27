@@ -13,7 +13,7 @@
     "frontend": "npm run dev --prefix frontend",
     "dev": "cross-env NODE_ENV=development concurrently \"npm run backend\" \"npm run frontend\"",
     "prod": "node backend/server.js",
-    "build": "vite build",
+    "build": "echo 'Building frontend' && cd frontend && npm run build",
     "test": "npm run test:backend:unit && npm run test:backend:functional && npm run test:backend:integration && npm run test:frontend:unit && npm run test:frontend:functional && npm run test:frontend:integration",
     "test:backend:unit": "vitest tests/backend/unit --config ./vitest.config.cjs",
     "test:backend:functional": "vitest tests/backend/functional --config ./vitest.config.cjs",
