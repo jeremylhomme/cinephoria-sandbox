@@ -7,9 +7,6 @@ dotenv.config({ path: path.resolve(__dirname, ".env") });
 
 export default defineConfig({
   plugins: [react()],
-  define: {
-    "process.env": process.env,
-  },
   build: {
     outDir: "dist",
   },
