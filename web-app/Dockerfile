@@ -21,6 +21,3 @@ RUN npm install -g prisma
 
 # Copy the current directory contents into the container at /usr/src/app
 COPY . .
-
-# Default command (this can be overridden in Docker Compose files)
-CMD ["node", "dockerBackendDev.js"]
