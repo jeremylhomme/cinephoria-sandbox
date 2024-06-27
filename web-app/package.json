@@ -6,6 +6,7 @@
   "type": "module",
   "scripts": {
     "backend": "node env_scripts/localBackend.js",
+    "prod:backend": "node env_scripts/prodBackend.js",
     "backend:docker:test": "node env_scripts/dockerBackendTest.js",
     "backend:docker:dev": "node env_scripts/dockerBackendDev.js",
     "docker:test": "docker-compose -f docker-compose.yml up -d --build",

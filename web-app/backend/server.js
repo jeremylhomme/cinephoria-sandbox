@@ -35,19 +35,29 @@ let mysqlPool;
 // Function to connect to MySQL
 const connectMySQL = async () => {
   try {
-    const uri = process.env.DATABASE_URL;
-    const port = process.env.PORT || 5000;
-    console.log(`Connecting to MySQL with URI: ${uri} and port ${port}...`);
+    const host = process.env.MYSQL_HOST;
+    const user = process.env.MYSQL_USER;
+    const password = process.env.MYSQL_PASSWORD;
+    const port = process.env.MYSQL_PORT || 3306;
+
     mysqlPool = mysql.createPool({
-      uri,
-      connectTimeout: 60000, // Set connection timeout to 60 seconds
+      host,
+      user,
+      password,
+      port,
+      connectTimeout: 60000,
     });
+
     mysqlConnection = await mysqlPool.getConnection();
-    console.log(`MySQL Connected: ${process.env.MYSQL_HOST} ✅`);
+    console.log(`MySQL Connected: ${host} ✅`);
+
     return {
       connection: mysqlConnection,
       pool: mysqlPool,
-      host: process.env.MYSQL_HOST,
+      host,
+      user,
+      port,
+      password,
     };
   } catch (error) {
     console.error(`Error from MySQL: ${error.message}`);
@@ -137,7 +147,7 @@ app.use(cookieParser());
     server.listen(port, () => console.log(`Server running on port ${port} ✅`));
     server.on("error", (err) => {
       if (err.code === "EADDRINUSE") {
-        console.log(`Port ${port} is in use by Docker`);
+        console.log(`Port ${port} is already in use`);
       } else {
         throw err;
       }
