@@ -1,17 +1,40 @@
 {
   "version": 2,
-
-  "name": "cinephoria-backend",
-  "builds": [
+  "projects": [
     {
-      "src": "backend/server.js",
-      "use": "@vercel/node"
-    }
-  ],
-  "routes": [
+      "name": "cinephoria-frontend",
+      "root": "./frontend",
+      "builds": [
+        {
+          "src": "package.json",
+          "use": "@vercel/static-build",
+          "config": {
+            "distDir": "dist"
+          }
+        }
+      ],
+      "routes": [
+        {
+          "src": "/(.*)",
+          "dest": "/dist/$1"
+        }
+      ]
+    },
     {
-      "src": "/api/(.*)",
-      "dest": "backend/server.js"
+      "name": "cinephoria-backend",
+      "root": "./backend",
+      "builds": [
+        {
+          "src": "server.js",
+          "use": "@vercel/node"
+        }
+      ],
+      "routes": [
+        {
+          "src": "/api/(.*)",
+          "dest": "/server.js"
+        }
+      ]
     }
   ]
 }
