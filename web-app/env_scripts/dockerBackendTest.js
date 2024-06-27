@@ -2,7 +2,6 @@ import { exec } from "child_process";
 import dotenv from "dotenv";
 import fs from "fs";
 
-// Ensure you specify the correct path to the .env.docker.test file
 dotenv.config({ path: ".env.docker.test" });
 
 const logFile = fs.createWriteStream("backend_start.log", { flags: "a" });

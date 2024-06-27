@@ -1,0 +1,53 @@
+# render.yaml
+
+services:
+  - type: web
+    name: cinephoria-frontend
+    env: docker
+    plan: free
+    dockerfilePath: ./frontend/Dockerfile
+    buildCommand: npm install && npm run build
+    startCommand: npm start
+    envVars:
+      - key: VITE_BASE_URL
+        value: https://cinephoria-sandbox.onrender.com
+
+  - type: web
+    name: cinephoria-backend
+    env: docker
+    plan: free
+    dockerfilePath: ./Dockerfile
+    buildCommand: npm install
+    startCommand: sh -c "until nc -z ${MYSQL_HOST} 3306; do echo 'Waiting for MySQL...'; sleep 1; done; echo 'MySQL is up - running Prisma migrate and generate'; npx prisma migrate deploy; npx prisma generate; npm run backend:docker:prod"
+    envVars:
+      - key: MONGODB_URI
+        fromDatabase:
+          name: cinephoria-mongodb
+          property: connectionString
+      - key: MYSQL_HOST
+        fromDatabase:
+          name: cinephoria-mysql
+          property: host
+      - key: MYSQL_PASSWORD
+        fromDatabase:
+          name: cinephoria-mysql
+          property: password
+      - key: MYSQL_DB_NAME
+        fromDatabase:
+          name: cinephoria-mysql
+          property: databaseName
+      - key: JWT_SECRET
+        value: cinephoriaprodsecretkey
+
+databases:
+  - name: cinephoria-mysql
+    type: mysql
+    version: 5.7
+    region: oregon
+    databaseName: sql_cinephoria_prod
+
+  - name: cinephoria-mongodb
+    type: mongodb
+    version: 4.4
+    region: oregon
+    databaseName: mongo_cinephoria_prod

@@ -22,5 +22,5 @@ RUN npm install -g prisma
 # Copy the current directory contents into the container at /usr/src/app
 COPY . .
 
-# Command to wait for the database to be ready and then run Prisma migrate and generate
-CMD ["sh", "-c", "until nc -z mysql-db 3306; do echo 'Waiting for MySQL...'; sleep 1; done; echo 'MySQL is up - running Prisma migrate and generate'; npx prisma migrate dev --name init; npx prisma generate; npm run backend:docker"]
+# Default command (this can be overridden in Docker Compose files)
+CMD ["node", "dockerBackendDev.js"]
