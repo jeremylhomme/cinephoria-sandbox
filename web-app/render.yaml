@@ -18,7 +18,7 @@ services:
     plan: free
     dockerfilePath: ./Dockerfile
     buildCommand: npm install
-    startCommand: sh -c "until nc -z ${MYSQL_HOST} 3306; do echo 'Waiting for MySQL...'; sleep 1; done; echo 'MySQL is up - running Prisma migrate and generate'; npx prisma migrate deploy; npx prisma generate; npm run backend:docker:prod"
+    startCommand: sh -c "until nc -z ${MYSQL_HOST} 3306; do echo 'Waiting for MySQL...'; sleep 1; done; echo 'MySQL is up - running Prisma migrate and generate'; npx prisma migrate deploy; npx prisma generate; npm run docker:prod"
     envVars:
       - key: MONGODB_URI
         fromDatabase:
