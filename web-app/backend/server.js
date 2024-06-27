@@ -36,7 +36,8 @@ let mysqlPool;
 const connectMySQL = async () => {
   try {
     const uri = process.env.DATABASE_URL;
-    console.log(`Connecting to MySQL with URI: ${uri}`); // Log connection URI for debugging
+    const port = process.env.PORT || 5000;
+    console.log(`Connecting to MySQL with URI: ${uri} and port ${port}...`);
     mysqlPool = mysql.createPool({
       uri,
       connectTimeout: 60000, // Set connection timeout to 60 seconds
