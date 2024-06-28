@@ -4,7 +4,7 @@ import fs from "fs";
 import mysql from "mysql2/promise";
 
 // Load environment variables from .env.prod file
-dotenv.config({ path: ".env.prod" });
+dotenv.config({ path: ".env" });
 
 const logFile = fs.createWriteStream("backend_start.log", { flags: "a" });
 
