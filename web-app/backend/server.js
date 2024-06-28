@@ -137,7 +137,7 @@ app.use(cookieParser());
 
     // Add a route handler for the root ("/") path
     app.get("/", (req, res) => {
-      res.status(200).send("Index page");
+      res.status(200).send("Server is running 🚀");
     });
 
     // Handling static files

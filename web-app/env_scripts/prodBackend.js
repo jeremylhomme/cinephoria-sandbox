@@ -34,7 +34,7 @@ const createDatabaseIfNotExists = async () => {
 
 const runPrismaMigrations = () => {
   return new Promise((resolve, reject) => {
-    const prisma = exec("npx prisma migrate deploy");
+    const prisma = exec("npx prisma migrate deploy && npx prisma generate");
 
     prisma.stdout.on("data", (data) => {
       log(`Prisma: ${data}`);
