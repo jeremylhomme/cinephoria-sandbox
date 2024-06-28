@@ -2,7 +2,8 @@ import { exec } from "child_process";
 import dotenv from "dotenv";
 import fs from "fs";
 
-dotenv.config({ path: ".env" });
+// Load environment variables from .env.prod file
+dotenv.config({ path: ".env.prod" });
 
 const logFile = fs.createWriteStream("backend_start.log", { flags: "a" });
 
@@ -13,7 +14,7 @@ const log = (message) => {
 
 const startBackend = () => {
   return new Promise((resolve, reject) => {
-    const backend = exec("nodemon ./backend/server.js");
+    const backend = exec("node ./backend/server.js");
 
     backend.stdout.on("data", (data) => {
       log(`Backend: ${data}`);
