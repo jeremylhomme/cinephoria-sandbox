@@ -1,5 +1,7 @@
 import { apiSlice } from "./apiSlice";
-import { SEAT_URL } from "../constants";
+import { BASE_URL } from "../constants";
+
+const SEAT_URL = `${BASE_URL}/api/seats`;
 
 export const seatApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({

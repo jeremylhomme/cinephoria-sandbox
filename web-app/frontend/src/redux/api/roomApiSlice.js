@@ -1,5 +1,7 @@
 import { apiSlice } from "./apiSlice";
-import { ROOM_URL } from "../constants";
+import { BASE_URL } from "../constants";
+
+const ROOM_URL = `${BASE_URL}/api/rooms`;
 
 export const roomApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({

@@ -1,11 +1,13 @@
 import { apiSlice } from "./apiSlice";
 import { BASE_URL } from "../constants";
 
+const MOVIE_URL = `${BASE_URL}/api/movies`;
+
 export const movieApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     createMovie: builder.mutation({
       query: (newMovie) => ({
-        url: `${BASE_URL}/api/movies`,
+        url: MOVIE_URL,
         method: "POST",
         body: newMovie,
         headers: {
@@ -17,7 +19,7 @@ export const movieApiSlice = apiSlice.injectEndpoints({
 
     updateMovie: builder.mutation({
       query: (data) => ({
-        url: `${BASE_URL}/api/movies/${data.id}`,
+        url: `${MOVIE_URL}/${data.id}`,
         method: "PUT",
         body: JSON.stringify(data),
         headers: {
@@ -29,7 +31,7 @@ export const movieApiSlice = apiSlice.injectEndpoints({
 
     deleteMovie: builder.mutation({
       query: (movieId) => ({
-        url: `${BASE_URL}/api/movies/${movieId}`,
+        url: `${MOVIE_URL}/${movieId}`,
         method: "DELETE",
       }),
       invalidatesTags: ["Movie"],
@@ -49,7 +51,7 @@ export const movieApiSlice = apiSlice.injectEndpoints({
             : "all";
         const cinemaQuery = cinemaId !== "all" ? `&cinemaId=${cinemaId}` : "";
         return {
-          url: `${BASE_URL}/api/movies?state=${state}&categories=${categoryQuery}${cinemaQuery}`,
+          url: `${MOVIE_URL}?state=${state}&categories=${categoryQuery}${cinemaQuery}`,
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -61,7 +63,7 @@ export const movieApiSlice = apiSlice.injectEndpoints({
 
     getMovieDetails: builder.query({
       query: (movieId) => ({
-        url: `${BASE_URL}/api/movies/${movieId}`,
+        url: `${MOVIE_URL}/${movieId}`,
         method: "GET",
         headers: {
           "Content-Type": "application/json",

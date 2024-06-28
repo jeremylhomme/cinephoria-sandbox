@@ -1,5 +1,7 @@
 import { apiSlice } from "./apiSlice";
-import { SESSION_URL } from "../constants";
+import { BASE_URL } from "../constants";
+
+const SESSION_URL = `${BASE_URL}/api/sessions`;
 
 export const sessionApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({

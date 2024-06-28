@@ -1,5 +1,7 @@
 import { apiSlice } from "./apiSlice";
-import { CINEMA_URL } from "../constants";
+import { BASE_URL } from "../constants";
+
+const CINEMA_URL = `${BASE_URL}/api/cinemas`;
 
 export const cinemaApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({

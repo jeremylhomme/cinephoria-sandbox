@@ -1,5 +1,7 @@
 import { apiSlice } from "./apiSlice";
-import { UPLOAD_URL } from "../constants";
+import { BASE_URL } from "../constants";
+
+const UPLOAD_URL = `${BASE_URL}/api/uploads`;
 
 export const uploadApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({

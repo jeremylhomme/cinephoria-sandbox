@@ -1,5 +1,7 @@
 import { apiSlice } from "./apiSlice";
-import { INCIDENT_URL } from "../constants";
+import { BASE_URL } from "../constants";
+
+const INCIDENT_URL = `${BASE_URL}/api/incidents`;
 
 export const incidentApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
