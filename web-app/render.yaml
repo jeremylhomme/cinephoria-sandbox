@@ -20,3 +20,8 @@ services:
       - key: DATABASE_URL
       - key: JWT_SECRET
       - key: MYSQL_HOST
+      - key: MYSQL_DB
+      - key: MYSQL_PASSWORD
+      - key: MYSQL_USER
+      - key: STRIPE_SECRET_KEY
+      - key: FRONTEND_URL
