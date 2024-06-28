@@ -6,11 +6,12 @@
   "type": "module",
   "scripts": {
     "backend": "node env_scripts/localBackend.js",
-    "prod:backend": "node env_scripts/prodBackend.js",
     "backend:docker:test": "node env_scripts/dockerBackendTest.js",
     "backend:docker:dev": "node env_scripts/dockerBackendDev.js",
+    "backend:docker:prod": "node env_scripts/dockerBackendProd.js",
     "docker:test": "docker-compose -f docker-compose.yml up -d --build",
     "docker:dev": "docker-compose -f docker-compose.dev.yml up -d --build",
+    "docker:prod": "docker-compose -f docker-compose.prod.yml up -d --build",
     "frontend": "npm run dev --prefix frontend",
     "dev": "cross-env NODE_ENV=development concurrently \"npm run backend\" \"npm run frontend\"",
     "prod": "node backend/server.js",

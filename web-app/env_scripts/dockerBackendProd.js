@@ -3,7 +3,7 @@ import dotenv from "dotenv";
 import fs from "fs";
 import util from "util";
 
-dotenv.config({ path: ".env.docker.prod" });
+dotenv.config({ path: ".env" });
 
 const execPromise = util.promisify(exec);
 const logFile = fs.createWriteStream("backend_start.log", { flags: "a" });

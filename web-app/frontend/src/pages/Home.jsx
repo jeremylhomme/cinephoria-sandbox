@@ -73,10 +73,10 @@ const Home = () => {
   const getLastWednesday = () => {
     const today = new Date();
     const dayOfWeek = today.getDay();
-    const daysSinceLastWednesday = (dayOfWeek + 4) % 7; // Calculate days since last Wednesday (Wednesday is 3 in JS Date)
+    const daysSinceLastWednesday = (dayOfWeek + 4) % 7;
     const lastWednesday = new Date(today);
     lastWednesday.setDate(today.getDate() - daysSinceLastWednesday);
-    lastWednesday.setHours(0, 0, 0, 0); // Set to start of the day
+    lastWednesday.setHours(0, 0, 0, 0);
     return lastWednesday;
   };
 
@@ -89,8 +89,8 @@ const Home = () => {
       movieDate < new Date(lastWednesday.getTime() + 24 * 60 * 60 * 1000)
     );
   });
-
-  console.log("Movies added on last Wednesday:", moviesAddedOnLastWednesday);
+  /* 
+  console.log("Movies added on last Wednesday:", moviesAddedOnLastWednesday); */
 
   const activeMovies = moviesAddedOnLastWednesday.filter(
     (movie) => movie.moviePublishingState === "active"
@@ -99,8 +99,8 @@ const Home = () => {
     (movie) => movie.moviePublishingState === "premiere"
   );
 
-  console.log("Active movies (last Wednesday):", activeMovies);
-  console.log("Premiere movies (last Wednesday):", premiereMovies);
+  /*  console.log("Active movies (last Wednesday):", activeMovies);
+  console.log("Premiere movies (last Wednesday):", premiereMovies); */
 
   const formatSessionDates = (sessions) => {
     if (!sessions || sessions.length === 0) return "Aucune séance disponible";
