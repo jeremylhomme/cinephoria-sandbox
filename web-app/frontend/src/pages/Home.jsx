@@ -6,7 +6,6 @@ import {
 } from "@headlessui/react";
 import { MinusIcon, PlusIcon } from "@heroicons/react/24/outline";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import backgroundVideo from "../assets/videos/background-video.mp4";
 import { useGetMoviesQuery } from "../redux/api/movieApiSlice";
 import { useGetCinemasQuery } from "../redux/api/cinemaApiSlice";
 import LoaderFull from "../components/LoaderFull";
@@ -138,14 +137,17 @@ const Home = () => {
       <div className="relative w-full h-[80vh] overflow-hidden">
         <video
           className="absolute inset-0 w-full h-full object-cover"
-          src={backgroundVideo}
+          src="https://cinephoriamedia.s3.us-east-2.amazonaws.com/Background+Videos/background-video.mp4"
           autoPlay
           loop
           muted
           disablePictureInPicture
           controlsList="nodownload nofullscreen noremoteplayback"
         >
-          <source src={backgroundVideo} type="video/mp4" />
+          <source
+            src="https://cinephoriamedia.s3.us-east-2.amazonaws.com/Background+Videos/background-video.mp4"
+            type="video/mp4"
+          />
           Your browser does not support the video tag.
         </video>
         <div className="absolute top-0 left-0 w-full h-full bg-black bg-opacity-70"></div>

@@ -17,7 +17,7 @@ const createMovie = asyncHandler(async (req, res) => {
     movieMinimumAge,
     categoryIds,
     moviePremiereDate,
-    movieScheduleDate, // Add movieScheduleDate here
+    movieScheduleDate,
   } = req.body;
 
   const movieImg =

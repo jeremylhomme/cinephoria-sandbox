@@ -1,5 +1,4 @@
-import React from "react";
-import { Fragment, useState, useEffect } from "react";
+import React, { Fragment, useState, useEffect } from "react";
 import { Dialog, Transition, Menu } from "@headlessui/react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import {
@@ -11,7 +10,6 @@ import {
   FilmIcon,
   TicketIcon,
   PlayCircleIcon,
-  ChevronDownIcon,
   VideoCameraIcon,
   ExclamationTriangleIcon,
 } from "@heroicons/react/24/outline";
@@ -25,7 +23,7 @@ import RoomIcon from "../../components/RoomIcon";
 
 import {
   useLogoutMutation,
-  useGetUserDetailsQuery,
+  useGetUserProfileQuery,
 } from "../../redux/api/userApiSlice";
 
 import { logout } from "../../redux/features/auth/authSlice";
@@ -36,7 +34,7 @@ function classNames(...classes) {
 
 const AdminMenu = () => {
   const { userInfo } = useSelector((state) => state.auth);
-  const { data: userDetails, isError } = useGetUserDetailsQuery(userInfo?.id);
+  const { data: userDetails, isError } = useGetUserProfileQuery(userInfo?.id);
 
   const [user, setUser] = useState({});
   const [sidebarMobileOpen, setSidebarMobileOpen] = useState(false);
@@ -53,6 +51,7 @@ const AdminMenu = () => {
       await logoutApiCall().unwrap();
       dispatch(logout());
       toast.success("Déconnexion réussie");
+      navigate("/login");
     } catch (error) {
       console.error("Logout Error:", error);
     }

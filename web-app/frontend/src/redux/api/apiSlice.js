@@ -1,5 +1,4 @@
 import { fetchBaseQuery, createApi } from "@reduxjs/toolkit/query/react";
-import { BASE_URL } from "../constants";
 
 const prepareHeaders = (headers, { getState }) => {
   const token = getState().auth.token;
@@ -10,16 +9,19 @@ const prepareHeaders = (headers, { getState }) => {
 };
 
 const baseQuery = fetchBaseQuery({
-  baseUrl: BASE_URL,
+  baseUrl: import.meta.env.VITE_BASE_URL,
   credentials: "include",
   prepareHeaders,
 });
+
+console.log(import.meta.env.VITE_BASE_URL);
 
 const baseQueryWithRejection = async (args, api, extraOptions) => {
   const result = await baseQuery(args, api, extraOptions);
   if (result.error) {
     console.error("Error from server:", result.error);
     if (result.error.status === 401) {
+      // Handle unauthorized error
     }
   }
   return result;

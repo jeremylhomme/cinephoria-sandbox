@@ -131,6 +131,7 @@ const getUserProfile = asyncHandler(async (req, res) => {
       userFirstName: user.userFirstName,
       userLastName: user.userLastName,
       userEmail: user.userEmail,
+      userPassword: user.userPassword,
       mustChangePassword: user.mustChangePassword,
     });
   } else {

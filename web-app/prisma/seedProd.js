@@ -7,12 +7,10 @@ import dotenv from "dotenv";
 import path from "path";
 import { fileURLToPath } from "url";
 
-// Resolve __dirname for ES modules
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// Load environment variables from .env.dev
-dotenv.config({ path: path.resolve(__dirname, "../.env.dev") });
+dotenv.config({ path: path.resolve(__dirname, "../.env") });
 
 const prisma = new PrismaClient();
 
@@ -22,22 +20,27 @@ async function createAdminUser() {
   const userEmail = "jeremy@gmail.com";
   const userRole = "admin";
 
-  const userExists = await prisma.user.findUnique({ where: { userEmail } });
-  if (userExists) {
-    console.log("User already exists with the same userEmail.");
-    return;
-  }
-
-  const userPassword = generatePassword();
-  console.log("Generated Password: ", userPassword);
-
-  const hashedPassword = await hashPassword(userPassword);
-  if (!hashedPassword) {
-    console.log("Failed to process userPassword, please try again.");
-    return;
-  }
-
   try {
+    const adminExists = await prisma.user.findFirst({
+      where: {
+        userRole: "admin",
+      },
+    });
+
+    if (adminExists) {
+      console.log("An admin user already exists.");
+      return;
+    }
+
+    const userPassword = generatePassword();
+    console.log("Generated Password: ", userPassword);
+
+    const hashedPassword = await hashPassword(userPassword);
+    if (!hashedPassword) {
+      console.log("Failed to process userPassword, please try again.");
+      return;
+    }
+
     const newUser = await prisma.user.create({
       data: {
         userFirstName,
@@ -45,14 +48,14 @@ async function createAdminUser() {
         userEmail,
         userPassword: hashedPassword,
         userRole,
-        mustChangePassword: true, // Set this field
+        mustChangePassword: true,
       },
     });
 
-    console.log("User created successfully.");
-    console.log("Generated Password: ", userPassword); // Log the generated password
+    console.log("Admin user created successfully.");
+    console.log("Generated Password: ", userPassword);
   } catch (error) {
-    console.error("Error creating user:", error);
+    console.error("Error creating admin user:", error);
   }
 }
 
