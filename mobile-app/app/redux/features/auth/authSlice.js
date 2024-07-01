@@ -5,19 +5,6 @@ const initialState = {
   userInfo: null,
 };
 
-const loadInitialState = async () => {
-  try {
-    const userInfo = await AsyncStorage.getItem("userInfo");
-    if (userInfo !== null) {
-      initialState.userInfo = JSON.parse(userInfo);
-    }
-  } catch (error) {
-    console.error("Failed to load user info from storage:", error);
-  }
-};
-
-loadInitialState();
-
 const authSlice = createSlice({
   name: "auth",
   initialState,
@@ -25,7 +12,6 @@ const authSlice = createSlice({
     setCredentials: (state, action) => {
       state.userInfo = action.payload;
       AsyncStorage.setItem("userInfo", JSON.stringify(action.payload));
-
       const expirationTime = new Date().getTime() + 30 * 24 * 60 * 60 * 1000; // 30 days
       AsyncStorage.setItem("expirationTime", expirationTime.toString());
     },
@@ -33,9 +19,19 @@ const authSlice = createSlice({
       state.userInfo = null;
       AsyncStorage.clear();
     },
+    loadUserInfo: (state, action) => {
+      state.userInfo = action.payload;
+    },
   },
 });
 
-export const { setCredentials, logout } = authSlice.actions;
+export const { setCredentials, logout, loadUserInfo } = authSlice.actions;
+
+export const initializeAuth = () => async (dispatch) => {
+  const userInfo = await AsyncStorage.getItem("userInfo");
+  if (userInfo) {
+    dispatch(loadUserInfo(JSON.parse(userInfo)));
+  }
+};
 
 export default authSlice.reducer;
